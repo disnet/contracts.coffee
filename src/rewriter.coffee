@@ -281,10 +281,8 @@ class exports.Rewriter
 
   # Contracts can also be included inside comments, for backward compatibility with coffeescript
   addContractComments: ->
-    tokens = @tokens
-    # console.log tokens
-    return true if tokens.length < 3
-    tokens.splice(0, 2) if tokens[0][0] is '#' and tokens[1][0] is '::' and tokens[3][0] is '::'
+    return true if @tokens.length < 3
+    @tokens.splice(0, 2) if @tokens[0][0] is '#' and @tokens[1][0] is '::' and @tokens[3][0] is '::'
     true
 
 
