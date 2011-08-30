@@ -433,8 +433,13 @@ o ::
   a: Num
   b: Self
   c: (Num) -> Self
+  inner: { y: Bool, z: Self }
 o = #...
 {% endhighlight %}
+
+`Self` binds to the closest object contract. So in this example,
+`Self` in `b` and `c` points to `o` and `Self` in `inner.z` points to
+`inner`.
 
 Objects with functions that have pre and post conditions:
 

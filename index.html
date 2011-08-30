@@ -42,6 +42,16 @@
       <li><a href="#naming">Naming</a></li>
       <li style="text-decoration: none;">&nbsp;</li>
       <li><span id="try_button">Try it now!</span></li>
+
+      <li style="text-decoration: none;">&nbsp;</li>
+      <li style="text-decoration: none;">&nbsp;</li>
+      <li>
+        <div style="position: absolute; left: 35px">
+        <a href="http://www.mozilla.org/">
+          <img style="height: 27px" src="documentation/images/moz-research.png">
+        </a>
+        </div>
+      </li>
     </ul>
   </div>
 
@@ -373,9 +383,12 @@ Parent contracts:
   <span class='nv'>a: </span><span class='nx'>Num</span>
   <span class='nv'>b: </span><span class='nx'>Self</span>
   <span class='nv'>c: </span><span class='nf'>(Num) -&gt;</span> <span class='nx'>Self</span>
+  <span class='nv'>inner: </span><span class='p'>{</span> <span class='nv'>y: </span><span class='nx'>Bool</span><span class='p'>,</span> <span class='nv'>z: </span><span class='nx'>Self</span> <span class='p'>}</span>
 <span class='nv'>o = </span><span class='c1'>#...</span>
 </code></pre>
 </div>
+<p><code>Self</code> binds to the closest object contract. So in this example, <code>Self</code> in <code>b</code> and <code>c</code> points to <code>o</code> and <code>Self</code> in <code>inner.z</code> points to <code>inner</code>.</p>
+
 <p>Objects with functions that have pre and post conditions:</p>
 <div class='highlight'><pre><code class='coffeescript'><span class='nx'>o</span> <span class='o'>::</span>
   <span class='nv'>a: </span><span class='nx'>Num</span>
@@ -479,6 +492,8 @@ Parent contracts:
 
     <div class="footer">
       get the source code on GitHub : <a href="http://github.com/disnet/contracts.coffee">disnet/contracts.coffee</a>
+      <div>
+      </div>
     </div>
 
   </div>
