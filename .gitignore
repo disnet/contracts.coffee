@@ -7,3 +7,4 @@ examples/beautiful_code/parse.coffee
 *.gem
 _site
 node_modules
+*.swp
