@@ -576,7 +576,20 @@ OPERATOR   = /// ^ (
 
 WHITESPACE = /^[^\n\S]+/
 
-COMMENT    = /^###([^#][\s\S]*?)(?:###[^\n\S]*|(?:###)?$)|^(?:\s*#(?!##[^#]).*)+/
+#
+#  A comment is either:
+#  ###
+#  # THIS (a multiline comment)
+#  ###
+#  or
+#  # THIS (a single line comment)
+#  or
+#  # THIS (a different kind of multiline comment)
+#  # THIS
+#  but not
+#  #:: THIS (this is a contract that's backward compatible with regular coffee-script)
+
+COMMENT    = /^###([^#][\s\S]*?)(?:###[^\n\S]*|(?:###)?$)|^(?:\s*#(?!##[^#]|::).*)+/
 
 CODE       = /^[-=][-=]?>/
 
