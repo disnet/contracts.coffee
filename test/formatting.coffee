@@ -70,7 +70,7 @@ test "`?.` and `::` should continue lines", ->
   ?.foo
   #eq Object::toString, Date?.
   #prototype
-  # ::
+  #::
   #?.foo
 
 doesNotThrow -> CoffeeScript.compile """

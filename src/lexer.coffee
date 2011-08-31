@@ -590,8 +590,8 @@ COMMENT    = /^###([^#][\s\S]*?)(?:###[^\n\S]*|(?:###)?$)|^(?:\s*#(?!##[^#]).*)+
 
 # Contract comments are contracts embedded in comments.
 # e.g This is a contract comment (sans quotes):
-# "# id :: (Num) -> Num"
-CONTRACT_COMMENT = /^(\s*#)[^#].+?\s::\s.+/
+# "#? id :: (Num) -> Num"
+CONTRACT_COMMENT = /^(\s*#\?)[^#].+?\s::\s.+/
 
 CODE       = /^[-=][-=]?>/
 
