@@ -23,7 +23,6 @@ class exports.Rewriter
     @removeMidExpressionNewlines()
     @closeOpenCalls()
     @closeOpenIndexes()
-    @addContractComments()
     @disambiguateContractSig()
     @addImplicitIndentation()
     @tagPostfixConditionals()
@@ -278,11 +277,6 @@ class exports.Rewriter
       else
         tokens.splice i, 0, val
       1
-
-  # Contracts can also be included inside comments, for backward compatibility with coffeescript
-  addContractComments: ->
-    return true if @tokens.length < 3
-    @tokens.splice(0, 2) if @tokens[0][0] is '#' and @tokens[1][0] is '::' and @tokens[3][0] is '::'
     true
 
 

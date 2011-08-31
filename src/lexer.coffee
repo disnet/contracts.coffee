@@ -48,15 +48,16 @@ exports.Lexer = class Lexer
     # `@literalToken` is the fallback catch-all.
     i = 0
     while @chunk = code.slice i
-      i += @identifierToken() or
-           @commentToken()    or
-           @whitespaceToken() or
-           @lineToken()       or
-           @heredocToken()    or
-           @stringToken()     or
-           @numberToken()     or
-           @regexToken()      or
-           @jsToken()         or
+      i += @identifierToken()      or
+           @contractCommentToken() or
+           @commentToken()         or
+           @whitespaceToken()      or
+           @lineToken()            or
+           @heredocToken()         or
+           @stringToken()          or
+           @numberToken()          or
+           @regexToken()           or
+           @jsToken()              or
            @literalToken()
 
     @closeIndentation()
@@ -165,6 +166,15 @@ exports.Lexer = class Lexer
       @token 'STRING', @makeString doc, quote, yes
     @line += count heredoc, '\n'
     heredoc.length
+
+  # Matches contract tokens embedded in single-line comments
+  # Only consumes the comment symbol (#),
+  # lets the parser consume the contract itself later
+  contractCommentToken: ->
+    return 0 unless match = @chunk.match CONTRACT_COMMENT
+    [comment, discarded_part] = match
+    discarded_part.length
+
 
   # Matches and consumes comments.
   commentToken: ->
@@ -576,20 +586,12 @@ OPERATOR   = /// ^ (
 
 WHITESPACE = /^[^\n\S]+/
 
-#
-#  A comment is either:
-#  ###
-#  # THIS (a multiline comment)
-#  ###
-#  or
-#  # THIS (a single line comment)
-#  or
-#  # THIS (a different kind of multiline comment)
-#  # THIS
-#  but not
-#  #:: THIS (this is a contract that's backward compatible with regular coffee-script)
+COMMENT    = /^###([^#][\s\S]*?)(?:###[^\n\S]*|(?:###)?$)|^(?:\s*#(?!##[^#]).*)+/
 
-COMMENT    = /^###([^#][\s\S]*?)(?:###[^\n\S]*|(?:###)?$)|^(?:\s*#(?!##[^#]|::).*)+/
+# Contract comments are contracts embedded in comments.
+# e.g This is a contract comment (sans quotes):
+# "# id :: (Num) -> Num"
+CONTRACT_COMMENT = /^(\s*#)[^#].+?\s::\s.+/
 
 CODE       = /^[-=][-=]?>/
 
