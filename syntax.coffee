@@ -12,7 +12,6 @@ or :: (Num or Str) -> Bool
 and :: (Num and Str) -> Bool # not a very accepting contract :)
 # want not but this conflicts with contract expression escape operator: !(x) -> x > 4
 not :: (not Num) -> Num
-~~>
 not :: (!Num) -> Num # conflict!
 
 # optional args
@@ -97,7 +96,7 @@ idEven :: (!MyEven) -> !MyEven
 # like >, <, between, etc. The only one we're providing are 'and' and 'or'.
 # I think the escape syntax is sufficient and potentially less confusing (also less
 # work for me :-). So where racket would use the flat combinators we have:
-f :: (Num and (!(x) -> x > 4)) -> (Num and (!(x) -> x < 10 and x > 1)
+f :: (Num and (!(x) -> x > 4)) -> (Num and (!(x) -> x < 10) and x > 1)
 
 # modules for browser
 

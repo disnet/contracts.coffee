@@ -277,6 +277,8 @@ class exports.Rewriter
       else
         tokens.splice i, 0, val
       1
+    true
+
 
   disambiguateContractSig: ->
     @scanTokens (token, i, tokens) ->

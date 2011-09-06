@@ -11,13 +11,11 @@
 # test "function, higher order in params", ->
 #   id :: ( ((Num) -> Str), Bool ) -> Num
 #   id = (x) -> x
-
 #   eq (id 4), 4
 
 # # test "function, higher order in params, implicit parens", ->
 # #   id :: ( (Num) -> Str, Bool ) -> Num
 # #   id = (x) -> x
-
 # #   eq (id 4), 4
 
 # test "function, higher order in range", ->
@@ -53,3 +51,69 @@
 # a :: C
 # b = C
 # idents need to match up
+
+
+test "contracts can be embedded in comments", ->
+  # Make sure that compiling code with contracts embedded in the comments
+  # generates the same JavaScript as code with just regular contracts.
+
+  js_with_contract = CoffeeScript.compile '''
+    id :: (Num) -> Num
+    id = (x) -> x
+  ''', { contracts : true }
+
+  js_without_contract = CoffeeScript.compile '''
+    id = (x) -> x
+  '''
+
+  # These snippets must have contracts when compiled
+  positive_tests = [
+    '''
+      #? id :: (Num) -> Num
+      id = (x) -> x
+    ''',
+    '''
+      #?id :: (Num) -> Num
+      id = (x) -> x
+    '''
+  ]
+
+  # These snippets must not have contracts when compiled
+  negative_tests = [
+    '''
+      # id :: (Num) -> Num
+      id = (x) -> x
+    ''',
+    '''
+      ##? id :: (Num) -> Num
+      id = (x) -> x
+    ''',
+    '''
+      #? ::
+      id = (x) -> x
+    ''',
+    '''
+      #? id::prototype_method
+      id = (x) -> x
+    ''',
+    '''
+      #::
+      id = (x) -> x
+    ''',
+    '''
+      #? somerandomtext
+      #? :: double colons on the next line
+      id = (x) -> x
+    '''
+  ]
+
+  for test in positive_tests
+    compiled_test = CoffeeScript.compile test, { contracts: true }
+    eq compiled_test, js_with_contract
+
+    compiled_test = CoffeeScript.compile test, { contracts: false }
+    eq compiled_test, js_without_contract
+
+  for test in negative_tests
+    compiled_test = CoffeeScript.compile test, { contracts: true }
+    eq compiled_test, js_without_contract
