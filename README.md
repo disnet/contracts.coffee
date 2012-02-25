@@ -25,6 +25,10 @@ Use the compiler:
 
     coffee -c --contracts /path/to/script.coffee
 
+An alternative to using the --contracts flag is setting this env variable:
+
+    export CONTRACTS_COFFEE_ENABLED=1
+
 If you are running in the browser then you'll need to load the 
 contracts library (found in [lib/contracts/contracts.js](https://github.com/disnet/contracts.coffee/tree/master/lib/contracts))
 
