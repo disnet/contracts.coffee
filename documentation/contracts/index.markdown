@@ -518,8 +518,8 @@ it will delay checking of `g` until `g` is actually invoked.
 f :: ((Num) -> Num, (Str) -> Str) -> Num
 f = (g, h) -> g 42
 
-num = (x) -> "string"
-str = (x) -> 42
+str = (x) -> "string"
+num = (x) -> 42
 
 f str, num  # fails when g is called inside f
 f num, num  # since h is never called it never fails
